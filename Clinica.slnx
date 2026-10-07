@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Clinica.Api/Clinica.Api.csproj" Id="e1d0bc0d-086f-4323-8c28-f2758eaa0fff" />
+  <Project Path="Clinica.Dominio/Clinica.Dominio.csproj" />
+  <Project Path="Clinica.Infraestructura/Clinica.Infraestructura.csproj" Id="12080866-8085-403f-a9df-160b563c6722" />
+</Solution>
