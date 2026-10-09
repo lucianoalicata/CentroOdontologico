@@ -1,0 +1,17 @@
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: seminario-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 2026
+      MYSQL_DATABASE: odontodb
+      MYSQL_PASSWORD: 2026
+    ports:
+      - "3306:3306"
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:

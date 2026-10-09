@@ -361,3 +361,14 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# --------------------------------------------------
+# Entornos locales y Frontend
+# --------------------------------------------------
+appsettings.Development.json
+*.local.json
+
+# Frontend Vite / React
+frontend/node_modules/
+frontend/dist/
+frontend/.vs/
