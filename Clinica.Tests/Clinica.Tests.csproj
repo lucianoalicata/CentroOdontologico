@@ -15,7 +15,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Clinica.Aplicacion\Clinica.Aplicacion.csproj" />
+    <ProjectReference Include="..\Clinica.Dominio\Clinica.Dominio.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="HistoriaClinica\" />
+    <Folder Include="Identidad\" />
+    <Folder Include="Notificaciones\" />
+    <Folder Include="ObrasSociales\" />
+    <Folder Include="Pagos\" />
+    <Folder Include="Turnos\" />
   </ItemGroup>
 
 </Project>

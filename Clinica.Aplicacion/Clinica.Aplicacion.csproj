@@ -6,4 +6,17 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Clinica.Dominio\Clinica.Dominio.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="HistoriaClinica\" />
+    <Folder Include="Identidad\" />
+    <Folder Include="Notificaciones\" />
+    <Folder Include="ObrasSociales\" />
+    <Folder Include="Pagos\" />
+    <Folder Include="Turnos\" />
+  </ItemGroup>
+
 </Project>
