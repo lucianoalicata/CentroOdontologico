@@ -1,5 +1,11 @@
 <Solution>
-  <Project Path="Clinica.Api/Clinica.Api.csproj" Id="e1d0bc0d-086f-4323-8c28-f2758eaa0fff" />
-  <Project Path="Clinica.Dominio/Clinica.Dominio.csproj" />
-  <Project Path="Clinica.Infraestructura/Clinica.Infraestructura.csproj" Id="12080866-8085-403f-a9df-160b563c6722" />
+  <Folder Name="/docs/">
+    <File Path="CONTRIBUTING.md" />
+    <File Path="convenciones-dominio.md" />
+  </Folder>
+  <Project Path="Clinica.Api/Clinica.Api.csproj" Id="55dca1eb-2b32-4044-a124-39b4de6e0e5f" />
+  <Project Path="Clinica.Aplicacion/Clinica.Aplicacion.csproj" Id="ded4e13b-f43a-4326-b829-80a2ecc5e393" />
+  <Project Path="Clinica.Dominio/Clinica.Dominio.csproj" Id="f01e9a7a-9599-4f40-8c5d-7c457f33f81b" />
+  <Project Path="Clinica.Infraestructura/Clinica.Infraestructura.csproj" Id="720b92c5-91f5-4f06-a69a-8ee37ff9e976" />
+  <Project Path="Clinica.Tests/Clinica.Tests.csproj" Id="cb3dfbf9-87ee-4354-a71a-21d56d2c4961" />
 </Solution>
