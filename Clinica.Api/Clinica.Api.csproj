@@ -1,28 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.9" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
+		<PackageReference Include="Scalar.AspNetCore" Version="2.0.18" />
+		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.11" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.11">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="HistoriaClinica\" />
-    <Folder Include="Identidad\" />
-    <Folder Include="Notificaciones\" />
-    <Folder Include="ObrasSociales\" />
-    <Folder Include="Pagos\" />
-    <Folder Include="Turnos\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Clinica.Aplicacion\Clinica.Aplicacion.csproj" />
-    <ProjectReference Include="..\Clinica.Infraestructura\Clinica.Infraestructura.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Clinica.Aplicacion\Clinica.Aplicacion.csproj" />
+		<ProjectReference Include="..\Clinica.Infraestructura\Clinica.Infraestructura.csproj" />
+	</ItemGroup>
 
 </Project>
