@@ -13,11 +13,19 @@
 
   <ItemGroup>
     <Folder Include="HistoriaClinica\" />
-    <Folder Include="Identidad\" />
     <Folder Include="Notificaciones\" />
     <Folder Include="ObrasSociales\" />
     <Folder Include="Pagos\" />
     <Folder Include="Turnos\" />
   </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.11" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.11">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
 
 </Project>
