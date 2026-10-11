@@ -10,7 +10,7 @@ Plataforma integral orientada a la centralización, trazabilidad y digitalizaci�
 
 ---
 
-## 📌 Contexto y Problemática
+## 🔵 Contexto y Problemática
 
 El flujo tradicional en clínicas y consultorios odontológicos suele depender de soporte en papel o sistemas fragmentados. Esta modalidad acarrea:
 * Ausentismo de pacientes por falta de recordatorios sistemáticos.
@@ -22,7 +22,7 @@ El **Sistema** aborda estas problemáticas mediante una solución robusta, traza
 
 ---
 
-## 🎯 Objetivos del Sistema
+## 🔵 Objetivos del Sistema
 
 * **Centralizar la administración de turnos:** Implementar un motor de reservas inteligente que sincronice en tiempo real las agendas de los odontólogos, la demanda espontánea (*walk-in*) y la autogestión del paciente.
 * **Modernizar el registro clínico:** Digitalizar la historia clínica con un odontograma interactivo bajo notación internacional FDI, garantizando inmutabilidad y auditoría de diagnósticos.
@@ -52,35 +52,20 @@ El **Sistema** aborda estas problemáticas mediante una solución robusta, traza
 
 ## 🛠️ Arquitectura y Tecnologías
 
-El sistema sigue una arquitectura desacoplada **Cliente-Servidor** estructurada bajo los principios de **Clean Architecture** (Arquitectura Limpia) en un enfoque de **Monolito Modular**, asegurando alta cohesión interna, bajo acoplamiento entre dominios y escalabilidad a futuro.
+El sistema sigue una arquitectura desacoplada **Cliente-Servidor** estructurada bajo los principios de **Clean Architecture** (Arquitectura Limpia) y **Domain-Driven Design (DDD)** en un enfoque de **Monolito Modular**:
 
-* **Backend:** C# / .NET (ASP.NET Core Web API)
-* **Persistencia:** Entity Framework Core
-* **Base de Datos:** SQL Server / PostgreSQL (Esquema relacional con integridad transaccional estricta)
-* **Frontend:** Single Page Application (React / Web Responsive)
-* **Integraciones Externas:** Pasarelas de pago online (Mercado Pago SDK) y servicios de mensajería para confirmación de turnos.
-
----
-
-## 🚀 Pautas de Trabajo para el Equipo
-
-Para garantizar un desarrollo coordinado entre los integrantes del proyecto:
-
-1. **Ramas Principales:**
-   * `main`: Código probado, documentado y listo para entregas a la cátedra.
-   * `develop`: Integración activa del avance semanal.
-2. **Convención de Ramas:**
-   * Cada nueva funcionalidad se desarrolla a partir de una rama propia derivada de `develop`:  
-     `feature/turnos`, `feature/odontograma`, `feature/obras-sociales`, `feature/pagos`.
-3. **Control de Cambios:**
-   * Toda incorporación a la rama principal se realiza mediante *Pull Request* revisado por al menos un integrante del equipo.
+* **Backend:** C# / .NET 10 (ASP.NET Core Web API)
+* **Persistencia:** Entity Framework Core con MySQL (Pomelo Provider)
+* **Seguridad:** Autenticación JWT Bearer con claims de roles y perfiles, hash de contraseñas con BCrypt
+* **Documentación API:** OpenAPI oficial de ASP.NET Core integrado con interfaz interactiva **Scalar** (`/scalar/v1`)
+* **Infraestructura de Desarrollo:** Contenedores con Docker Compose (MySQL 8.0)
+* **Frontend:** Single Page Application (Vite / React)
 
 ---
 
-## 👥 Equipo de Proyecto
-+ Alicata, Luciano Antonio
-+ Castro, María Belén
-+ Fernández, Ignacio
-+ Leyva, María Belén
-* Universidad Tecnológica Nacional — Facultad Regional Tucumán
-* Seminario Integrador - 2026
+## 🔵 Inicio Rápido para Desarrollo
+
+### 1. Levantar el entorno de base de datos
+Desde la raíz del repositorio, iniciá la base de datos en Docker:
+```bash
+docker compose up -d
