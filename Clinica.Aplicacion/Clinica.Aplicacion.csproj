@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <Folder Include="HistoriaClinica\" />
-    <Folder Include="Identidad\" />
     <Folder Include="Notificaciones\" />
     <Folder Include="ObrasSociales\" />
     <Folder Include="Pagos\" />

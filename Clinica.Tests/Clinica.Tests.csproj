@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Clinica.Aplicacion\Clinica.Aplicacion.csproj" />
     <ProjectReference Include="..\Clinica.Dominio\Clinica.Dominio.csproj" />
+    <ProjectReference Include="..\Clinica.Infraestructura\Clinica.Infraestructura.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,7 +26,6 @@
 
   <ItemGroup>
     <Folder Include="HistoriaClinica\" />
-    <Folder Include="Identidad\" />
     <Folder Include="Notificaciones\" />
     <Folder Include="ObrasSociales\" />
     <Folder Include="Pagos\" />
