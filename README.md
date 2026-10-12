@@ -3,8 +3,6 @@
 **Universidad Tecnológica Nacional — Facultad Regional Tucumán**
 Seminario Integrador · Proyecto Final Integrador
 
-# SIGO
-
 ### Sistema Integral de Gestión Odontológica
 
 ![.NET](https://img.shields.io/badge/.NET-10-512BD4?logo=dotnet&logoColor=white)
