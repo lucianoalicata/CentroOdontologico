@@ -31,7 +31,7 @@ Seminario Integrador · Proyecto Final Integrador
 
 ## 1. Descripción del proyecto
 
-SIGO es una plataforma orientada a la centralización, trazabilidad y digitalización de la operación clínica, administrativa y contable de un centro odontológico. Reemplaza los registros en papel y las planillas aisladas por un sistema unificado que integra la atención clínica, la gestión de turnos, la autogestión del paciente y la facturación a prestadores de salud.
+Es una plataforma orientada a la centralización, trazabilidad y digitalización de la operación clínica, administrativa y contable de un centro odontológico. Reemplaza los registros en papel y las planillas aisladas por un sistema unificado que integra la atención clínica, la gestión de turnos, la autogestión del paciente y la facturación a prestadores de salud.
 
 ### Problemática
 
