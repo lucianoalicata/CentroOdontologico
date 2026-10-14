@@ -1,0 +1,7 @@
+/* Los estilos de la interfaz los aporta Mantine.
+   Se reemplaza el CSS de ejemplo de Vite, que entra en conflicto con el layout. */
+html,
+body,
+#root {
+  min-height: 100%;
+}
