@@ -75,8 +75,8 @@ Un entre-turno permite incorporar a un paciente sin ocupar una franja horaria de
 
 | Etapa | Contenido | Estado |
 |---|---|---|
-| **Sprint 0 — Fundaciones** | Arquitectura en capas, núcleo compartido, `DbContext` modular, identidad (usuarios, roles y perfiles) y autenticación JWT. | Backend completado |
-| **Sprint 0 — Frontend base** | Rutas, sesión de usuario y cliente HTTP (S0-06). | En curso |
+| **Sprint 0 — Fundaciones** | Arquitectura en capas, núcleo compartido, `DbContext` modular, identidad (usuarios, roles y perfiles) y autenticación JWT. | completado |
+| **Sprint 0 — Frontend base** | Rutas, sesión de usuario y cliente HTTP (S0-06). | completado |
 | **Sprint 1 — Módulos en paralelo** | Identidad y pacientes · Turnos y agenda · Historia clínica y prestaciones · Odontograma. | Planificado |
 | **Sprint 2 — Integración** | Portal del paciente y flujo de atención completo. | Planificado |
 | **Posterior** | Pagos y pasarela, obras sociales (previo relevamiento en el centro), notificaciones. | Planificado |
@@ -108,7 +108,7 @@ Api  ──►  Aplicacion  ──►  Dominio
 | Seguridad | JWT Bearer · BCrypt |
 | Documentación de la API | OpenAPI · Scalar |
 | Pruebas | xUnit |
-| Frontend | React · TypeScript · Vite |
+| Frontend | React · TypeScript · Vite · Mantine|
 | Integraciones previstas | Mercado Pago (pagos) · mensajería para recordatorios |
 
 ---
@@ -206,7 +206,7 @@ npm run dev
 
 ## 9. Flujo de trabajo
 
-- `main`: versiones estables, probadas y listas para entrega.
+- `main`: versiones estables, probadas y listas para entrega. Al finalizar todo el TFI.
 - `development`: integración continua del equipo.
 - Cada tarea se desarrolla en una rama propia derivada de `development` y se incorpora mediante *Pull Request* revisado por otro integrante.
 
