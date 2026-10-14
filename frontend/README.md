@@ -1,6 +1,6 @@
-# Frontend — SIGO
+# Frontend — Centro Odontológico
 
-Aplicación web de SIGO. Stack: React, TypeScript, Vite, React Router, Axios y Mantine.
+Aplicación web. Stack: React, TypeScript, Vite, React Router, Axios y Mantine.
 
 ## Requisitos
 
