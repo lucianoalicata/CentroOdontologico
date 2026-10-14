@@ -1,75 +1,64 @@
-# React + TypeScript + Vite
+# Frontend — SIGO
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación web de SIGO. Stack: React, TypeScript, Vite, React Router, Axios y Mantine.
 
-Currently, two official plugins are available:
+## Requisitos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Node.js (versión LTS).
+- La API en ejecución (`dotnet run --project Clinica.Api`).
 
-## React Compiler
+## Comandos
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Comando | Descripción |
+|---|---|
+| `npm install` | Instala las dependencias |
+| `npm run dev` | Servidor de desarrollo en `http://localhost:5173` |
+| `npm run build` | Compila para producción y verifica los tipos |
+| `npm run lint` | Revisa el código con ESLint |
+| `npm run format` | Da formato con Prettier |
 
-## Expanding the ESLint configuration
+## Configuración
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+`.env.development` define `VITE_API_URL`, la dirección de la API. El puerto `https` debe coincidir con el de `Clinica.Api/Properties/launchSettings.json`.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+El servidor de desarrollo usa siempre el puerto 5173 (si está ocupado, falla en lugar de cambiar de puerto), porque es el origen permitido por CORS en la API.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Estructura
 
 ```
-
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+src/
+  api/        Cliente HTTP único y manejo de errores
+  auth/       Sesión: contexto, almacenamiento del token y tipos
+  routes/     Rutas, rutas protegidas por rol y pantalla inicial de cada rol
+  layouts/    Estructura visual (cabecera y menú lateral) y menú por rol
+  features/   Una carpeta por módulo (identidad, turnos, ...), espejo del backend
+  shared/     Componentes y páginas comunes
 ```
+
+## Cómo agregar una pantalla
+
+1. Crear el componente en `src/features/<módulo>/`.
+2. Registrar la ruta en `src/routes/AppRouter.tsx`, dentro del bloque `RutaProtegida` del rol que corresponda (si la pantalla es para varios roles, se pasan todos en `roles`):
+
+   ```tsx
+   <Route element={<RutaProtegida roles={['Secretaria']} />}>
+     <Route path="/secretaria/pacientes" element={<PacientesPage />} />
+   </Route>
+   ```
+
+3. Agregar la opción al menú en `src/layouts/menu.ts`, en la sección del rol:
+
+   ```ts
+   Secretaria: [
+     { etiqueta: 'Recepción', ruta: RUTAS.secretaria },
+     { etiqueta: 'Pacientes', ruta: '/secretaria/pacientes' },
+   ],
+   ```
+
+## Convenciones
+
+- Las llamadas a la API se hacen únicamente con `apiClient`; nunca con `fetch` ni `axios` directamente. Los errores se muestran con `mensajeDeError`.
+- La sesión y los roles se consultan con `useAuth()`. Los componentes no leen el token.
+- Los componentes de interfaz son de Mantine; no se mezclan otras bibliotecas.
+- Los textos se escriben en español formal (usted).
+- Las fechas llegan de la API en UTC y se convierten a hora local únicamente en la interfaz.

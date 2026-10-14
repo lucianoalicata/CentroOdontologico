@@ -1,11 +1,18 @@
+import { Button, Container, Stack, Text, Title } from '@mantine/core'
 import { Link } from 'react-router-dom'
 
 export function NoEncontradoPage() {
   return (
-    <main>
-      <h1>Página no encontrada</h1>
-      <p>La dirección ingresada no existe.</p>
-      <Link to="/">Volver al inicio</Link>
-    </main>
+    <Container size="xs" py={60}>
+      <Stack align="center" gap="xs">
+        <Title order={2}>Página no encontrada</Title>
+        <Text c="dimmed" ta="center">
+          La dirección ingresada no existe.
+        </Text>
+        <Button component={Link} to="/" mt="md">
+          Volver al inicio
+        </Button>
+      </Stack>
+    </Container>
   )
 }

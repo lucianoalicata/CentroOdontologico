@@ -1,6 +1,7 @@
 import { Navigate, Outlet } from 'react-router-dom'
 import { useAuth } from '../auth/useAuth'
 import type { Rol } from '../auth/tipos'
+import { PantallaCarga } from '../shared/components/PantallaCarga'
 import { RUTAS } from './rutas'
 
 interface Props {
@@ -11,7 +12,7 @@ interface Props {
 export function RutaProtegida({ roles }: Props) {
   const { usuario, cargando, tieneRol } = useAuth()
 
-  if (cargando) return <p>Cargando…</p>
+  if (cargando) return <PantallaCarga />
 
   // Sin sesión: al login
   if (!usuario) {
