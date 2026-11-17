@@ -1,12 +1,11 @@
-﻿using Clinica.Aplicacion.Identidad.Excepciones;
+﻿using Clinica.Aplicacion.Comun.Excepciones;
+using Clinica.Aplicacion.Identidad.Excepciones;
 using Clinica.Dominio.Comun;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Clinica.Api.Middleware;
 
-// Punto único donde las excepciones se convierten en respuestas HTTP.
-// Así los controllers no necesitan try/catch.
 public class ManejadorExcepciones : IExceptionHandler
 {
     private readonly ILogger<ManejadorExcepciones> _logger;
@@ -19,6 +18,8 @@ public class ManejadorExcepciones : IExceptionHandler
         {
             CredencialesInvalidasException => (StatusCodes.Status401Unauthorized, "No autenticado"),
             DomainException => (StatusCodes.Status400BadRequest, "Solicitud inválida"),
+            AccesoDenegadoException => (StatusCodes.Status403Forbidden, "No autorizado"),
+            NoEncontradoException => (StatusCodes.Status404NotFound, "No encontrado"),
             _ => (StatusCodes.Status500InternalServerError, "Error interno")
         };
 
@@ -29,7 +30,6 @@ public class ManejadorExcepciones : IExceptionHandler
         {
             Status = status,
             Title = titulo,
-            // En un 500 nunca se expone el mensaje interno
             Detail = status == StatusCodes.Status500InternalServerError
                 ? "Ocurrió un error inesperado."
                 : ex.Message
