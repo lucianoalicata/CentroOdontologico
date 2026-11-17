@@ -75,7 +75,7 @@ builder.Services.AddOptions<JwtBearerOptions>(JwtBearerDefaults.AuthenticationSc
         };
     });
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(PoliticasDeAutorizacion.Configurar);
 
 // 7. Inyección de dependencias de Identidad
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
