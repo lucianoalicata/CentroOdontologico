@@ -62,3 +62,15 @@ src/
 - Los componentes de interfaz son de Mantine; no se mezclan otras bibliotecas.
 - Los textos se escriben en español formal (usted).
 - Las fechas llegan de la API en UTC y se convierten a hora local únicamente en la interfaz.
+
+## Utilidades compartidas
+
+Las utilidades transversales se encuentran en `src/shared/utils/`:
+
+- **`fechas.ts`**: convierte marcas temporales en UTC provenientes de la API a la hora local del navegador usando `dayjs` con el plugin `utc`.
+  - `formatearFecha(fechaUtc)` → `DD/MM/YYYY`
+  - `formatearFechaHora(fechaUtc)` → `DD/MM/YYYY HH:mm`
+  - `formatearHora(fechaUtc)` → `HH:mm`
+- **`avisos.ts`**: wrappers sobre `@mantine/notifications` para unificar el feedback al usuario.
+  - `avisarExito(mensaje, titulo?)` → notificación en color `teal`.
+  - `avisarError(error, titulo?)` → extrae automáticamente el mensaje de error devuelto por `ManejadorExcepciones` (Axios) o un `Error` estándar y lo muestra en color `red`.
