@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Clinica.Infraestructura.Persistencia;
 
-public class ClinicaDbContext : DbContext
+public class ClinicaDbContext : DbContext, IUnitOfWork
 {
     public ClinicaDbContext(DbContextOptions<ClinicaDbContext> options) : base(options) { }
 
@@ -63,4 +63,7 @@ public class ClinicaDbContext : DbContext
 
         return base.SaveChangesAsync(cancellationToken);
     }
+
+    public Task<int> GuardarCambiosAsync(CancellationToken ct = default)
+    => SaveChangesAsync(ct);
 }

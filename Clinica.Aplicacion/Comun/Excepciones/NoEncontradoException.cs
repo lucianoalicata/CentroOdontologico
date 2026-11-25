@@ -3,6 +3,6 @@
     public class NoEncontradoException : Exception
     {
         public NoEncontradoException(string recurso)
-            : base("No se encontró ${recurso}.") { }
+            : base($"No se encontró {recurso}.") { }
     }
 }
