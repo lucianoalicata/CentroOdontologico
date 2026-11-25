@@ -34,6 +34,13 @@ public class PacienteRepository : IPacienteRepository
             .FirstOrDefaultAsync(p => p.Dni == dniLimpio, ct);
     }
 
+    public async Task<PacientePerfil?> ObtenerPorIdIncluyendoInactivosAsync(int id, CancellationToken ct = default)
+    {
+        return await _context.Pacientes
+            .IgnoreQueryFilters()
+            .FirstOrDefaultAsync(p => p.Id == id, ct);
+    }
+
     public async Task<ResultadoPaginado<PacientePerfil>> BuscarPaginadoAsync(
         string? filtro,
         int pageIndex,
