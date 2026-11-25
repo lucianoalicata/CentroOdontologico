@@ -2,8 +2,6 @@
 
 namespace Clinica.Dominio.Identidad;
 
-// El paciente existe como persona clínica aunque no tenga cuenta web.
-// UsuarioId es opcional: se completa cuando el paciente accede al portal.
 public class PacientePerfil : EntidadConBorradoLogico
 {
     public int? UsuarioId { get; private set; }
@@ -12,27 +10,37 @@ public class PacientePerfil : EntidadConBorradoLogico
     public string Dni { get; private set; } = null!;
     public string Telefono { get; private set; } = null!;
     public DateOnly FechaNacimiento { get; private set; }
+    public string? Domicilio { get; private set; }
 
     public bool TieneCuentaWeb => UsuarioId.HasValue;
 
     protected PacientePerfil() { }
 
-    public PacientePerfil(string nombre, string apellido, string dni, string telefono,
-        DateOnly fechaNacimiento, int? usuarioId = null)
+    public PacientePerfil(
+        string nombre,
+        string apellido,
+        string dni,
+        string telefono,
+        DateOnly fechaNacimiento,
+        string? domicilio = null,
+        int? usuarioId = null)
     {
         Nombre = Guard.NoVacio(nombre, "Nombre");
         Apellido = Guard.NoVacio(apellido, "Apellido");
         Dni = NormalizarDni(dni);
         Telefono = Guard.NoVacio(telefono, "Teléfono");
         FechaNacimiento = ValidarFechaNacimiento(fechaNacimiento);
+        Domicilio = NormalizarDomicilio(domicilio);
         UsuarioId = usuarioId.HasValue ? Guard.IdValido(usuarioId.Value, "UsuarioId") : null;
     }
 
-    public void ActualizarDatos(string nombre, string apellido, string telefono)
+    public void ActualizarDatos(string nombre, string apellido, string telefono, DateOnly fechaNacimiento, string? domicilio = null)
     {
         Nombre = Guard.NoVacio(nombre, "Nombre");
         Apellido = Guard.NoVacio(apellido, "Apellido");
         Telefono = Guard.NoVacio(telefono, "Teléfono");
+        FechaNacimiento = ValidarFechaNacimiento(fechaNacimiento);
+        Domicilio = NormalizarDomicilio(domicilio);
     }
 
     public void VincularUsuario(int usuarioId)
@@ -41,6 +49,9 @@ public class PacientePerfil : EntidadConBorradoLogico
             throw new DomainException("El paciente ya tiene una cuenta vinculada.");
         UsuarioId = Guard.IdValido(usuarioId, "UsuarioId");
     }
+
+    private static string? NormalizarDomicilio(string? domicilio) =>
+        string.IsNullOrWhiteSpace(domicilio) ? null : domicilio.Trim();
 
     private static string NormalizarDni(string dni)
     {

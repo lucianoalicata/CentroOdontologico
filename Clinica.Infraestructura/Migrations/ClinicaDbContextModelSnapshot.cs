@@ -87,6 +87,10 @@ namespace Clinica.Infraestructura.Migrations
                         .HasMaxLength(8)
                         .HasColumnType("varchar(8)");
 
+                    b.Property<string>("Domicilio")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
                     b.Property<DateTime?>("FechaBaja")
                         .HasColumnType("datetime(6)");
 
