@@ -74,6 +74,9 @@ public class RegistrarPacienteUseCaseTests
         public Task<PacientePerfil?> ObtenerPorDniIncluyendoInactivosAsync(string dni, CancellationToken ct = default) =>
             Task.FromResult(Lista.FirstOrDefault(p => p.Dni == dni));
 
+        public Task<PacientePerfil?> ObtenerPorIdIncluyendoInactivosAsync(int id, CancellationToken ct = default) =>
+            Task.FromResult(Lista.FirstOrDefault(p => p.Id == id));
+
         public Task<ResultadoPaginado<PacientePerfil>> BuscarPaginadoAsync(string? filtro, int pageIndex, int pageSize, CancellationToken ct = default) =>
             throw new NotImplementedException();
     }

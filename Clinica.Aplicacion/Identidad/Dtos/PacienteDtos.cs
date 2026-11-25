@@ -18,3 +18,10 @@ public record PacienteDto(
     string? Domicilio,
     bool TieneCuentaWeb,
     bool Activo);
+
+public record ActualizarPacienteDto(
+    string Nombre,
+    string Apellido,
+    string Telefono,
+    DateOnly FechaNacimiento,
+    string? Domicilio);
