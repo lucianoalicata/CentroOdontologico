@@ -59,7 +59,7 @@ public class ManejadorExcepcionesTests
     {
         var (status, cuerpo) = await Manejar(new NoEncontradoException("recurso"));
         Assert.Equal(404, status);
-        Assert.Equal("No se encontró ${recurso}.", cuerpo.Detail);
+        Assert.Equal("No se encontró recurso.", cuerpo.Detail);
     }
 
     [Fact]

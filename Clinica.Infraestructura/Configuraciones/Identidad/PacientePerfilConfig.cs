@@ -14,6 +14,7 @@ public class PacientePerfilConfig : IEntityTypeConfiguration<PacientePerfil>
         builder.Property(p => p.Nombre).IsRequired().HasMaxLength(100);
         builder.Property(p => p.Apellido).IsRequired().HasMaxLength(100);
         builder.Property(p => p.Dni).IsRequired().HasMaxLength(8);
+        builder.Property(p => p.Domicilio).HasMaxLength(200);
         builder.Property(p => p.Telefono).IsRequired().HasMaxLength(30);
 
         builder.HasIndex(p => p.Dni).IsUnique();
