@@ -1,10 +1,10 @@
-using System.Text;
 using Clinica.Api.Documentacion;
 using Clinica.Api.Middleware;
 using Clinica.Api.Seguridad;
 using Clinica.Aplicacion.Identidad;
 using Clinica.Aplicacion.Identidad.Puertos;
 using Clinica.Aplicacion.Identidad.Servicios;
+using Clinica.Dominio.Comun;
 using Clinica.Dominio.Identidad;
 using Clinica.Infraestructura.Identidad.Repositorios;
 using Clinica.Infraestructura.Identidad.Seguridad;
@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -83,6 +84,8 @@ builder.Services.AddScoped<IPerfilRepository, PerfilRepository>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
+builder.Services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ClinicaDbContext>());
 
 // 8. Usuario actual / Contexto HTTP
 builder.Services.AddHttpContextAccessor();
