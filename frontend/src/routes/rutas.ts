@@ -7,6 +7,7 @@ export const RUTAS = {
   administrador: '/administrador',
   paciente: '/paciente',
   pacientes: '/pacientes',
+  disponibilidad: '/disponibilidad',
   prohibido: '/prohibido',
 } as const
 

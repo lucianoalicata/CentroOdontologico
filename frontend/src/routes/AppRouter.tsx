@@ -1,14 +1,15 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { useAuth } from '../auth/useAuth'
 import { LoginPage } from '../features/identidad/LoginPage'
+import { PacientesPage } from '../features/identidad/PacientesPage'
+import { DisponibilidadPage } from '../features/odotologos/DisponibilidadPage'
 import { LayoutPrincipal } from '../layouts/LayoutPrincipal'
-import { Spinner } from '../ui/atoms/Spinner/Spinner'
 import { NoEncontradoPage } from '../shared/pages/NoEncontradoPage'
 import { PanelProvisorioPage } from '../shared/pages/PanelProvisorioPage'
 import { ProhibidoPage } from '../shared/pages/ProhibidoPage'
+import { Spinner } from '../ui/atoms/Spinner/Spinner'
 import { RutaProtegida } from './RutaProtegida'
 import { RUTAS, rutaInicial } from './rutas'
-import { PacientesPage } from '../features/identidad/PacientesPage'
 
 /** Redirige al usuario a su pantalla inicial según su sesión. */
 function RedirigirSegunSesion() {
@@ -55,6 +56,7 @@ export function AppRouter() {
 
           <Route element={<RutaProtegida roles={['Secretaria', 'Odontologo', 'Administrador']} />}>
             <Route path={RUTAS.pacientes} element={<PacientesPage />} />
+            <Route path={RUTAS.disponibilidad} element={<DisponibilidadPage />} />
           </Route>
         </Route>
       </Route>
