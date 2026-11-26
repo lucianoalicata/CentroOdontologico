@@ -2,11 +2,11 @@ import type { Rol } from '../auth/tipos'
 
 export const RUTAS = {
   login: '/login',
-  administrador: '/admin',
-  secretaria: '/secretaria',
   odontologo: '/odontologo',
+  secretaria: '/secretaria',
+  administrador: '/administrador',
   paciente: '/paciente',
-  prohibido: '/403',
+  pacientes: '/pacientes',
 } as const
 
 // Si un usuario tiene varios roles, se usa el primero de esta lista

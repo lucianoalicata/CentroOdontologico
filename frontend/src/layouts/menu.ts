@@ -8,9 +8,9 @@ export interface ItemMenu {
 
 // Cada módulo agrega acá sus pantallas, en la sección del rol que corresponda.
 const MENU_POR_ROL: Record<Rol, ItemMenu[]> = {
-  Odontologo: [{ etiqueta: 'Mi agenda', ruta: RUTAS.odontologo }],
-  Secretaria: [{ etiqueta: 'Recepción', ruta: RUTAS.secretaria }],
-  Administrador: [{ etiqueta: 'Administración', ruta: RUTAS.administrador }],
+  Odontologo: [{ etiqueta: 'Mi agenda', ruta: RUTAS.odontologo }, { etiqueta: 'Pacientes', ruta: RUTAS.pacientes }],
+  Secretaria: [{ etiqueta: 'Recepción', ruta: RUTAS.secretaria }, { etiqueta: 'Pacientes', ruta: RUTAS.pacientes }],
+  Administrador: [{ etiqueta: 'Administración', ruta: RUTAS.administrador }, { etiqueta: 'Pacientes', ruta: RUTAS.pacientes }],
   Paciente: [{ etiqueta: 'Mi portal', ruta: RUTAS.paciente }],
 }
 
