@@ -3,11 +3,12 @@
 **Universidad Tecnológica Nacional — Facultad Regional Tucumán**
 Seminario Integrador · Proyecto Final Integrador
 
-### Sistema Integral de Gestión Odontológica
+### Sistema Integral de Gestión Odontológica (SIGO)
 
 ![.NET](https://img.shields.io/badge/.NET-10-512BD4?logo=dotnet&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-8-4479A1?logo=mysql&logoColor=white)
-![React](https://img.shields.io/badge/React-TypeScript-61DAFB?logo=react&logoColor=black)
+![React](https://img.shields.io/badge/React-19%20%2B%20TypeScript-61DAFB?logo=react&logoColor=black)
+![Mantine](https://img.shields.io/badge/UI-Mantine%20v9-339AF0?logo=mantine&logoColor=white)
 ![Arquitectura](https://img.shields.io/badge/Arquitectura-Monolito%20Modular-2E7D32)
 
 </div>
@@ -75,17 +76,18 @@ Un entre-turno permite incorporar a un paciente sin ocupar una franja horaria de
 
 | Etapa | Contenido | Estado |
 |---|---|---|
-| **Sprint 0 — Fundaciones** | Arquitectura en capas, núcleo compartido, `DbContext` modular, identidad (usuarios, roles y perfiles) y autenticación JWT. | completado |
-| **Sprint 0 — Frontend base** | Rutas, sesión de usuario y cliente HTTP (S0-06). | completado |
-| **Sprint 1 — Módulos en paralelo** | Identidad y pacientes · Turnos y agenda · Historia clínica y prestaciones · Odontograma. | Planificado |
-| **Sprint 2 — Integración** | Portal del paciente y flujo de atención completo. | Planificado |
-| **Posterior** | Pagos y pasarela, obras sociales (previo relevamiento en el centro), notificaciones. | Planificado |
+| **Sprint 0 — Fundaciones** | Arquitectura en capas, núcleo compartido, `DbContext` modular, identidad (usuarios, roles y perfiles) y autenticación JWT (`POST /api/auth/login`, `GET /api/auth/me`). | Completado |
+| **Sprint 0 — Frontend base** | Rutas protegidas por rol, sesión de usuario, Mantine v9 y cliente HTTP con manejo unificado de errores. | Completado |
+| **Sprint 1 — Identidad y Pacientes** | CRUD completo de pacientes con domicilio y reactivación por DNI (`GET/POST/PUT/DELETE/PATCH /api/pacientes`), listado de odontólogos activos (`GET /api/odontologos`) y pantalla de pacientes (`/pacientes`). | Completado |
+| **Sprint 1 — Turnos y Horarios** | Formularios frontend de turno/entre-turno (`TurnoFormModal`) y disponibilidad semanal (`/disponibilidad`) completados. Pendiente backend de turnos (`S1-12` a `S1-20`) y agenda del día (`S1-21`). | En progreso |
+| **Sprint 2 — Integración** | Portal del paciente y flujo de atención completo (historia clínica y odontograma). | Planificado |
+| **Posterior** | Pagos y pasarela (Mercado Pago), obras sociales, notificaciones. | Planificado |
 
 ---
 
 ## 5. Arquitectura y tecnologías
 
-El sistema es un **monolito modular** con **arquitectura limpia (Clean Architecture)**: capas con dependencias dirigidas hacia el dominio y módulos de negocio con bajo acoplamiento entre sí.
+### Backend: Monolito Modular + Clean Architecture
 
 ```
 Api  ──►  Aplicacion  ──►  Dominio
@@ -95,10 +97,26 @@ Api  ──►  Aplicacion  ──►  Dominio
 
 | Capa | Responsabilidad |
 |---|---|
-| **Dominio** | Entidades, reglas de negocio y contratos de persistencia. No depende de ninguna otra capa. |
-| **Aplicación** | Servicios y casos de uso, DTOs y puertos técnicos (hash de contraseñas, generación de tokens). |
-| **Infraestructura** | Acceso a datos con EF Core, repositorios y servicios externos. |
-| **Api** | Controllers, autenticación, autorización y configuración de la aplicación. |
+| **Dominio** | Entidades, reglas de negocio (`Guard`, borrado lógico) y contratos de repositorio. Sin dependencias externas. |
+| **Aplicación** | Servicios, casos de uso, DTOs, validaciones y puertos técnicos. |
+| **Infraestructura** | Acceso a datos con EF Core (MySQL), migraciones, repositorios y seguridad. |
+| **Api** | Controllers REST, políticas de autorización (`SoloPersonal`), `ProblemDetails` y documentación Scalar. |
+
+### Frontend: Clean Architecture + Atomic Design
+
+```
+features (Pages)  ──►  ui (organisms / molecules / atoms)  ──►  application (hooks)  ──►  infrastructure (repositories)  ──►  domain (types)
+```
+
+| Capa | Responsabilidad |
+|---|---|
+| **`domain/`** | Tipos e interfaces puras de negocio (sin dependencias de React ni Mantine). |
+| **`infrastructure/`** | Cliente Axios (`apiClient`), parser de errores y repositories por módulo (`pacientes`, `odontologos`, `turnos`, `horarios`). |
+| **`application/`** | Custom hooks que encapsulan casos de uso de UI (`usePacientes`, `useOdontologos`, `useDisponibilidadOdontologo`, etc.). |
+| **`ui/`** | Componentes organizados por Atomic Design (`atoms/`, `molecules/`, `organisms/`, `templates/`). |
+| **`features/`** | Páginas delgadas que componen organismos y conectan rutas. |
+
+### Stack tecnológico
 
 | Componente | Tecnología |
 |---|---|
@@ -106,9 +124,9 @@ Api  ──►  Aplicacion  ──►  Dominio
 | Persistencia | Entity Framework Core · Pomelo (proveedor MySQL) |
 | Base de datos | MySQL 8 (contenedor Docker en desarrollo) |
 | Seguridad | JWT Bearer · BCrypt |
-| Documentación de la API | OpenAPI · Scalar |
+| Documentación de la API | OpenAPI · Scalar (`/scalar/v1`) |
 | Pruebas | xUnit |
-| Frontend | React · TypeScript · Vite · Mantine|
+| Frontend | React 19 · TypeScript · Vite · Mantine v9 |
 | Integraciones previstas | Mercado Pago (pagos) · mensajería para recordatorios |
 
 ---
@@ -119,79 +137,68 @@ Api  ──►  Aplicacion  ──►  Dominio
 .
 ├── Clinica.Dominio/           Entidades, reglas de negocio, contratos
 ├── Clinica.Aplicacion/        Servicios, casos de uso, DTOs, puertos
-├── Clinica.Infraestructura/   EF Core, repositorios, seguridad
+├── Clinica.Infraestructura/   EF Core, migraciones, repositorios, seguridad
 ├── Clinica.Api/               Controllers y composición de la aplicación
-├── Clinica.Tests/             Pruebas unitarias
-├── frontend/                  Aplicación web (en construcción)
-├── docs/                      Documentación técnica
+├── Clinica.Tests/             Pruebas unitarias (xUnit)
+├── frontend/
+│   └── src/
+│       ├── domain/            Tipos puros de negocio
+│       ├── infrastructure/    Cliente HTTP, errorParser y repositories
+│       ├── application/       Custom hooks (casos de uso de UI)
+│       ├── ui/                Atoms, molecules, organisms y templates
+│       ├── features/          Páginas por módulo (identidad, odontologos, turnos)
+│       ├── auth/              Contexto y proveedor de sesión
+│       ├── routes/            Enrutador y protección por roles
+│       └── shared/            Páginas de error y utilidades
+├── docs/                      Documentación técnica y planificación de sprints
+├── LEVANTAR-PROYECTO.md       Guía paso a paso para levantar el entorno local
 ├── CONTRIBUTING.md            Guía de trabajo del equipo
 └── README.md
 ```
-
-Cada capa se organiza en carpetas por módulo (`Identidad`, `Turnos`, `HistoriaClinica`, `ObrasSociales`, `Pagos`, `Notificaciones`).
 
 ---
 
 ## 7. Puesta en marcha
 
-### Requisitos
+Para la guía detallada paso a paso (con solución de errores frecuentes), consultá **[`LEVANTAR-PROYECTO.md`](LEVANTAR-PROYECTO.md)**.
 
-- SDK de .NET 10
-- Docker y Docker Compose
-- Node.js (versión LTS), para el frontend
+### Resumen rápido
 
-### Base de datos
-
-```bash
-docker compose up -d
-```
-
-### Configuración local
-
-Los valores sensibles no se almacenan en el repositorio. Cada integrante los configura en su equipo con `user-secrets`:
-
-```bash
-cd Clinica.Api
-dotnet user-secrets init
-dotnet user-secrets set "ConnectionStrings:DefaultConnection" "<cadena de conexión a MySQL>"
-dotnet user-secrets set "Jwt:SecretKey" "<clave aleatoria de 32 caracteres o más>"
-dotnet user-secrets set "Seed:Password" "<contraseña para los usuarios de prueba>"
-```
-
-El emisor, la audiencia y la duración del token (`Jwt:Issuer`, `Jwt:Audience`, `Jwt:ExpirationMinutes`) y los orígenes permitidos por CORS (`Cors:Origins`) se definen en `appsettings.Development.json`.
-
-### Ejecución
-
-```bash
-dotnet run --project Clinica.Api
-```
-
-En el entorno de desarrollo, al iniciar la aplicación se aplican las migraciones pendientes y se cargan los usuarios de prueba. La documentación interactiva de la API está disponible en `/scalar`.
+1. **Requisitos:** SDK de .NET 10, Docker Desktop (iniciado) y Node.js 20+ LTS.
+2. **Base de datos:**
+   ```bash
+   docker compose up -d
+   ```
+3. **Secretos locales (una sola vez):**
+   ```bash
+   cd Clinica.Api
+   dotnet user-secrets init
+   dotnet user-secrets set "Jwt:SecretKey" "<clave aleatoria de 32 caracteres o más>"
+   dotnet user-secrets set "Seed:Password" "Dev12345!"
+   cd ..
+   ```
+4. **Backend (en HTTPS, puerto 7068):**
+   ```bash
+   dotnet run --project Clinica.Api --launch-profile https
+   ```
+   Documentación interactiva disponible en `https://localhost:7068/scalar/v1`.
+5. **Frontend (puerto 5173):**
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
 
 ### Usuarios de prueba
 
-Todos comparten la contraseña definida en `Seed:Password`.
+Todos comparten la contraseña configurada en `Seed:Password` (`Dev12345!`).
 
-| Rol | Correo |
-|---|---|
-| Administrador | `admin@clinica.test` |
-| Secretaría | `secretaria@clinica.test` |
-| Odontólogo | `odontologo@clinica.test` |
-| Paciente | `paciente@clinica.test` |
-
-### Pruebas
-
-```bash
-dotnet test
-```
-
-### Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
+| Rol | Correo | Ruta inicial |
+|---|---|---|
+| Administrador | `admin@clinica.test` | `/administrador` |
+| Secretaría | `secretaria@clinica.test` | `/secretaria` |
+| Odontólogo | `odontologo@clinica.test` | `/odontologo` |
+| Paciente | `paciente@clinica.test` | `/paciente` |
 
 ---
 
@@ -199,16 +206,18 @@ npm run dev
 
 | Documento | Contenido |
 |---|---|
+| [`LEVANTAR-PROYECTO.md`](LEVANTAR-PROYECTO.md) | Guía completa de instalación, configuración y resolución de problemas. |
 | [`docs/convenciones-dominio.md`](docs/convenciones-dominio.md) | Convenciones de arquitectura, dominio, persistencia y seguridad. |
+| [`docs/sprints/sprint-1.md`](docs/sprints/sprint-1.md) | Planificación y alcance del Sprint 1. |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Flujo de ramas, commits y pull requests. |
 
 ---
 
 ## 9. Flujo de trabajo
 
-- `main`: versiones estables, probadas y listas para entrega. Al finalizar todo el TFI.
-- `development`: integración continua del equipo.
-- Cada tarea se desarrolla en una rama propia derivada de `development` y se incorpora mediante *Pull Request* revisado por otro integrante.
+- `main`: versiones estables, probadas y listas para entrega.
+- `development`: rama principal de integración continua del equipo.
+- Cada tarea se desarrolla en una rama propia (`feat/s1-XX-...`) derivada de `development` y se incorpora mediante *Pull Request* o merge controlado.
 
 El detalle completo se encuentra en [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
