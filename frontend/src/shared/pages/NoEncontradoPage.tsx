@@ -1,6 +1,9 @@
 import { Button, Container, Stack, Text, Title } from '@mantine/core'
 import { Link } from 'react-router-dom'
 
+/**
+ * Page: recurso no encontrado (404).
+ */
 export function NoEncontradoPage() {
   return (
     <Container size="xs" py={60}>

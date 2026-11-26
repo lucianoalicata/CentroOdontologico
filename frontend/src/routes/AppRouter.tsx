@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { useAuth } from '../auth/useAuth'
 import { LoginPage } from '../features/identidad/LoginPage'
 import { LayoutPrincipal } from '../layouts/LayoutPrincipal'
-import { PantallaCarga } from '../shared/components/PantallaCarga'
+import { Spinner } from '../ui/atoms/Spinner/Spinner'
 import { NoEncontradoPage } from '../shared/pages/NoEncontradoPage'
 import { PanelProvisorioPage } from '../shared/pages/PanelProvisorioPage'
 import { ProhibidoPage } from '../shared/pages/ProhibidoPage'
@@ -10,11 +10,11 @@ import { RutaProtegida } from './RutaProtegida'
 import { RUTAS, rutaInicial } from './rutas'
 import { PacientesPage } from '../features/identidad/PacientesPage'
 
-// La raíz "/" manda a cada usuario a su pantalla inicial
+/** Redirige al usuario a su pantalla inicial según su sesión. */
 function RedirigirSegunSesion() {
   const { usuario, cargando } = useAuth()
 
-  if (cargando) return <PantallaCarga />
+  if (cargando) return <Spinner />
 
   return <Navigate to={usuario ? rutaInicial(usuario.roles) : RUTAS.login} replace />
 }

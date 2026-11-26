@@ -5,7 +5,10 @@ import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../auth/useAuth'
 import { menuParaRoles } from './menu'
 
-// Estructura visual de la zona autenticada: cabecera, menú lateral y contenido.
+/**
+ * Template: estructura visual de la zona autenticada.
+ * Responsabilidad única: renderizar cabecera, menú lateral y área de contenido.
+ */
 export function LayoutPrincipal() {
   const { usuario, logout } = useAuth()
   const [menuAbierto, { toggle, close }] = useDisclosure()
@@ -15,7 +18,7 @@ export function LayoutPrincipal() {
 
   const items = menuParaRoles(usuario.roles)
 
-  // Si hay rutas anidadas, se marca la opción cuya ruta coincide más específicamente
+  // Marca la opción cuya ruta coincide más específicamente
   const activo = items
     .filter((item) => pathname === item.ruta || pathname.startsWith(`${item.ruta}/`))
     .sort((a, b) => b.ruta.length - a.ruta.length)[0]
