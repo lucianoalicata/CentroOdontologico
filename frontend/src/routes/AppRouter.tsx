@@ -8,6 +8,7 @@ import { PanelProvisorioPage } from '../shared/pages/PanelProvisorioPage'
 import { ProhibidoPage } from '../shared/pages/ProhibidoPage'
 import { RutaProtegida } from './RutaProtegida'
 import { RUTAS, rutaInicial } from './rutas'
+import { PacientesPage } from '../features/identidad/PacientesPage'
 
 // La raíz "/" manda a cada usuario a su pantalla inicial
 function RedirigirSegunSesion() {
@@ -50,6 +51,10 @@ export function AppRouter() {
               path={RUTAS.paciente}
               element={<PanelProvisorioPage titulo="Portal del paciente" />}
             />
+          </Route>
+
+          <Route element={<RutaProtegida roles={['Secretaria', 'Odontologo', 'Administrador']} />}>
+            <Route path={RUTAS.pacientes} element={<PacientesPage />} />
           </Route>
         </Route>
       </Route>
