@@ -7,6 +7,7 @@ export const RUTAS = {
   administrador: '/administrador',
   paciente: '/paciente',
   pacientes: '/pacientes',
+  prohibido: '/prohibido',
 } as const
 
 // Si un usuario tiene varios roles, se usa el primero de esta lista

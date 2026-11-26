@@ -12,11 +12,16 @@ import {
   Title,
 } from '@mantine/core'
 import { Navigate } from 'react-router-dom'
-import { mensajeDeError } from '../../api/errores'
+import { parsearError } from '../../infrastructure/http/errorParser'
 import { useAuth } from '../../auth/useAuth'
 import { rutaInicial } from '../../routes/rutas'
-import { PantallaCarga } from '../../shared/components/PantallaCarga'
+import { Spinner } from '../../ui/atoms/Spinner/Spinner'
 
+/**
+ * Page: inicio de sesión.
+ * Responsabilidad única: renderizar el formulario de login.
+ * La lógica de autenticación vive en useAuth (DIP).
+ */
 export function LoginPage() {
   const { usuario, cargando, login } = useAuth()
 
@@ -25,9 +30,8 @@ export function LoginPage() {
   const [error, setError] = useState<string | null>(null)
   const [enviando, setEnviando] = useState(false)
 
-  if (cargando) return <PantallaCarga />
+  if (cargando) return <Spinner />
 
-  // Con sesión iniciada: siempre a la pantalla inicial de su rol
   if (usuario) {
     return <Navigate to={rutaInicial(usuario.roles)} replace />
   }
@@ -40,7 +44,7 @@ export function LoginPage() {
     try {
       await login({ email, password })
     } catch (e) {
-      setError(mensajeDeError(e))
+      setError(parsearError(e))
     } finally {
       setEnviando(false)
     }
