@@ -207,7 +207,7 @@ Todos comparten la contraseña configurada en `Seed:Password` (`Dev12345!`).
 | Documento | Contenido |
 |---|---|
 | [`LEVANTAR-PROYECTO.md`](LEVANTAR-PROYECTO.md) | Guía completa de instalación, configuración y resolución de problemas. |
-| [`docs/convenciones-dominio.md`](docs/convenciones-dominio.md) | Convenciones de arquitectura, dominio, persistencia y seguridad. |
+| [`convenciones-dominio.md`](CONVENCIONES-DOMINIO.md) | Convenciones de arquitectura, dominio, persistencia y seguridad. |
 | [`docs/sprints/sprint-1.md`](docs/sprints/sprint-1.md) | Planificación y alcance del Sprint 1. |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Flujo de ramas, commits y pull requests. |
 
