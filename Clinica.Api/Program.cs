@@ -88,7 +88,8 @@ builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
 builder.Services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ClinicaDbContext>());
 builder.Services.AddScoped<IPacienteService, PacienteService>();
 builder.Services.AddScoped<ListarOdontologosActivosUseCase>();
-
+builder.Services.AddScoped<RegistrarPacienteUseCase>();
+builder.Services.AddScoped<IOdontologoConsulta, OdontologoConsulta>();
 // 8. Usuario actual / Contexto HTTP
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUsuarioActual, UsuarioActual>();
