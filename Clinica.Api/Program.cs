@@ -1,4 +1,6 @@
 using Clinica.Api.Documentacion;
+using Clinica.Aplicacion.HistoriaClinica.Puertos;
+using Clinica.Infraestructura.HistoriaClinica.Almacenamiento;
 using Clinica.Api.Middleware;
 using Clinica.Api.Seguridad;
 using Clinica.Aplicacion.Identidad;
@@ -93,7 +95,18 @@ builder.Services.AddScoped<IOdontologoConsulta, OdontologoConsulta>();
 // 8. Usuario actual / Contexto HTTP
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUsuarioActual, UsuarioActual>();
-
+// 8b. Almacenamiento de archivos adjuntos (en disco, solo desarrollo)
+builder.Services.AddOptions<AlmacenamientoSettings>()
+    .Bind(builder.Configuration.GetSection(AlmacenamientoSettings.Seccion))
+    .PostConfigure(s =>
+    {
+        // Una ruta relativa se resuelve contra la carpeta de la API.
+        if (!string.IsNullOrWhiteSpace(s.RutaBase))
+            s.RutaBase = Path.GetFullPath(s.RutaBase, builder.Environment.ContentRootPath);
+    })
+    .Validate(s => !string.IsNullOrWhiteSpace(s.RutaBase), "Almacenamiento:RutaBase es obligatoria.")
+    .ValidateOnStart();
+builder.Services.AddScoped<IAlmacenamientoArchivos, AlmacenamientoLocalArchivos>();
 var app = builder.Build();
 
 // 9. Migraciones automáticas + Seeder (solo en desarrollo)
