@@ -1,4 +1,7 @@
-import { Center, Loader, Paper, Stack, Table } from '@mantine/core'
+import { ActionIcon, Center, Group, Loader, Paper, Stack, Table, Tooltip } from '@mantine/core'
+import { IconFileText } from '@tabler/icons-react'
+import { Link } from 'react-router-dom'
+import { rutaHistoriaClinica } from '../../../routes/rutas'
 import { formatearFecha } from '../../../shared/utils/fechas'
 import { AccionesTabla } from '../../molecules/AccionesTabla/AccionesTabla'
 import { BuscadorTexto } from '../../molecules/BuscadorTexto/BuscadorTexto'
@@ -77,12 +80,25 @@ export function TablaPacientes({
                       <EstadoPortalBadge activo={p.tieneCuentaWeb} />
                     </Table.Td>
                     <Table.Td>
-                      <AccionesTabla
-                        onEditar={() => onEditar(p)}
-                        onEliminar={() => onDarDeBaja(p)}
-                        etiquetaEditar="Editar paciente"
-                        etiquetaEliminar="Dar de baja"
-                      />
+                      <Group gap="xs" justify="flex-end" wrap="nowrap">
+                        <Tooltip label="Historia clínica">
+                          <ActionIcon
+                            component={Link}
+                            to={rutaHistoriaClinica(p.id)}
+                            variant="subtle"
+                            color="teal"
+                            aria-label="Historia clínica"
+                          >
+                            <IconFileText size={16} />
+                          </ActionIcon>
+                        </Tooltip>
+                        <AccionesTabla
+                          onEditar={() => onEditar(p)}
+                          onEliminar={() => onDarDeBaja(p)}
+                          etiquetaEditar="Editar paciente"
+                          etiquetaEliminar="Dar de baja"
+                        />
+                      </Group>
                     </Table.Td>
                   </Table.Tr>
                 ))}

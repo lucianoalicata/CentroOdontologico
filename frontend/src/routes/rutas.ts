@@ -9,8 +9,12 @@ export const RUTAS = {
   pacientes: '/pacientes',
   disponibilidad: '/disponibilidad',
   prestaciones: '/prestaciones',
+  historiaClinica: '/pacientes/:pacienteId/historia-clinica',
   prohibido: '/prohibido',
 } as const
+
+export const rutaHistoriaClinica = (pacienteId: number) =>
+  `/pacientes/${pacienteId}/historia-clinica`
 
 // Si un usuario tiene varios roles, se usa el primero de esta lista
 const PRIORIDAD: { rol: Rol; ruta: string }[] = [
