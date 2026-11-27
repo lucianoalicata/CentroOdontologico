@@ -1,11 +1,15 @@
 using Clinica.Api.Documentacion;
 using Clinica.Api.Middleware;
 using Clinica.Api.Seguridad;
+using Clinica.Aplicacion.HistoriaClinica.Servicios;
 using Clinica.Aplicacion.Identidad;
 using Clinica.Aplicacion.Identidad.Puertos;
 using Clinica.Aplicacion.Identidad.Servicios;
 using Clinica.Dominio.Comun;
+using Clinica.Dominio.HistoriaClinica;
 using Clinica.Dominio.Identidad;
+using Clinica.Infraestructura.HistoriaClinica.Datos;
+using Clinica.Infraestructura.HistoriaClinica.Repositorios;
 using Clinica.Infraestructura.Identidad.Repositorios;
 using Clinica.Infraestructura.Identidad.Seguridad;
 using Clinica.Infraestructura.Persistencia;
@@ -90,6 +94,11 @@ builder.Services.AddScoped<IPacienteService, PacienteService>();
 builder.Services.AddScoped<ListarOdontologosActivosUseCase>();
 builder.Services.AddScoped<RegistrarPacienteUseCase>();
 builder.Services.AddScoped<IOdontologoConsulta, OdontologoConsulta>();
+
+// 7b. Inyección de dependencias de Historia clínica
+builder.Services.AddScoped<IPrestacionRepository, PrestacionRepository>();
+builder.Services.AddScoped<IPrestacionService, PrestacionService>();
+
 // 8. Usuario actual / Contexto HTTP
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUsuarioActual, UsuarioActual>();
@@ -112,6 +121,8 @@ if (app.Environment.IsDevelopment())
     {
         await DbSeeder.SeedAsync(db, scope.ServiceProvider.GetRequiredService<IPasswordHasher>(), passwordSeed);
     }
+
+    await NomencladorSeeder.SeedAsync(db);
 }
 
 // 10. Pipeline HTTP y Middlewares
