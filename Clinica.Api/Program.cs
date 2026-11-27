@@ -19,6 +19,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +31,9 @@ builder.Services.AddDbContext<ClinicaDbContext>(options =>
 });
 
 // 2. Controladores y OpenAPI
-builder.Services.AddControllers();
+// Los enums viajan como texto ("Operatoria") en lugar de números
+builder.Services.AddControllers()
+    .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.AddOpenApi(opciones => opciones.AddDocumentTransformer<BearerSecurityTransformer>());
 
 // 3. Errores -> respuestas HTTP
