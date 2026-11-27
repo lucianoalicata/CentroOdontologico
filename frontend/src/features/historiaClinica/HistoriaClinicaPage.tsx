@@ -7,6 +7,7 @@ import { useHistoriaClinica } from '../../application/historiaClinica/useHistori
 import { RUTAS } from '../../routes/rutas'
 import { EstadoVacio } from '../../ui/atoms/EstadoVacio/EstadoVacio'
 import { CabeceraPagina } from '../../ui/molecules/CabeceraPagina/CabeceraPagina'
+import { AdjuntosEntrada } from '../../ui/organisms/AdjuntosEntrada/AdjuntosEntrada'
 import { AlertasMedicasPanel } from '../../ui/organisms/AlertasMedicasPanel/AlertasMedicasPanel'
 import { EvolucionHistoriaClinica } from '../../ui/organisms/EvolucionHistoriaClinica/EvolucionHistoriaClinica'
 import { RegistrarEntradaModal } from '../../ui/organisms/RegistrarEntradaModal/RegistrarEntradaModal'
@@ -88,6 +89,9 @@ export function HistoriaClinicaPage() {
         entradas={historia.entradas}
         puedeCorregir={esOdontologo}
         onCorregir={abrirCorreccion}
+        renderExtra={(entrada) => (
+          <AdjuntosEntrada entradaId={entrada.id} puedeSubir={esOdontologo} />
+        )}
       />
 
       {esOdontologo && (
