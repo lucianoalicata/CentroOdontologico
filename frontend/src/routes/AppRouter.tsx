@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { useAuth } from '../auth/useAuth'
 import { LoginPage } from '../features/identidad/LoginPage'
 import { PacientesPage } from '../features/identidad/PacientesPage'
+import { PrestacionesPage } from '../features/historiaClinica/PrestacionesPage'
 import { DisponibilidadPage } from '../features/odotologos/DisponibilidadPage'
 import { LayoutPrincipal } from '../layouts/LayoutPrincipal'
 import { NoEncontradoPage } from '../shared/pages/NoEncontradoPage'
@@ -37,6 +38,7 @@ export function AppRouter() {
               path={RUTAS.administrador}
               element={<PanelProvisorioPage titulo="Administración" />}
             />
+            <Route path={RUTAS.prestaciones} element={<PrestacionesPage />} />
           </Route>
 
           <Route element={<RutaProtegida roles={['Secretaria']} />}>
