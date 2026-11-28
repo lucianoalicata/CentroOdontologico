@@ -19,6 +19,10 @@ public class ClinicaDbContext : DbContext, IUnitOfWork
     public DbSet<Prestacion> Prestaciones => Set<Prestacion>();
     public DbSet<Turno> Turnos => Set<Turno>();
     public DbSet<HorarioDisponible> HorariosDisponibles => Set<HorarioDisponible>();
+    public DbSet<HistoriaClinicaPaciente> HistoriasClinicas => Set<HistoriaClinicaPaciente>();
+    public DbSet<EntradaHistoriaClinica> EntradasHistoriaClinica => Set<EntradaHistoriaClinica>();
+    public DbSet<PrestacionRealizada> PrestacionesRealizadas => Set<PrestacionRealizada>();
+    public DbSet<ArchivoAdjunto> ArchivosAdjuntos => Set<ArchivoAdjunto>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
