@@ -1,4 +1,3 @@
-using System.Globalization;
 using Clinica.Aplicacion.Turnos.Dtos;
 using Clinica.Dominio.Comun;
 using Clinica.Dominio.Turnos;
@@ -29,11 +28,7 @@ public class DisponibilidadService : IDisponibilidadService
 
         return CalculadoraDisponibilidad
             .FranjasLibres(odontologoId, fecha, horarios, turnos)
-            .Select(f => new FranjaLibreDto(AHoraTexto(f.Inicio), AHoraTexto(f.Fin)))
+            .Select(f => new FranjaLibreDto(TurnoMapeo.AHoraTexto(f.Inicio), TurnoMapeo.AHoraTexto(f.Fin)))
             .ToList();
     }
-
-    // Formato fijo "HH:mm", independiente de la configuración regional del servidor.
-    private static string AHoraTexto(TimeOnly hora) =>
-        hora.ToString("HH\\:mm", CultureInfo.InvariantCulture);
 }
