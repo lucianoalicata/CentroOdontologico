@@ -18,6 +18,10 @@ using Clinica.Infraestructura.Persistencia;
 using Clinica.Aplicacion.Turnos.Servicios;
 using Clinica.Dominio.Turnos;
 using Clinica.Infraestructura.Turnos.Repositorios;
+using Clinica.Aplicacion.Comun.Puertos;
+using Clinica.Aplicacion.Turnos.Puertos;
+using Clinica.Infraestructura.Comun;
+using Clinica.Infraestructura.Turnos.Consultas;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -111,6 +115,9 @@ builder.Services.AddScoped<IPrestacionService, PrestacionService>();
 builder.Services.AddScoped<ITurnoRepository, TurnoRepository>();
 builder.Services.AddScoped<IHorarioDisponibleRepository, HorarioDisponibleRepository>();
 builder.Services.AddScoped<IDisponibilidadService, DisponibilidadService>();
+builder.Services.AddScoped<IConsultaPerfiles, ConsultaPerfiles>();
+builder.Services.AddScoped<ProgramarTurnoUseCase>();
+builder.Services.AddSingleton<IReloj, RelojClinica>();
 
 // 8. Usuario actual / Contexto HTTP
 builder.Services.AddHttpContextAccessor();

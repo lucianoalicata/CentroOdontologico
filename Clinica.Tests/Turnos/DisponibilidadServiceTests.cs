@@ -21,7 +21,7 @@ public class DisponibilidadServiceTests
     public async Task ObtenerFranjasLibres_CuandoHayHorariosYTurnos_EntoncesDevuelveLasLibresEnFormatoHoraMinuto()
     {
         _horarios.Lista.Add(new HorarioDisponible(1, DiaSemana.Lunes, new TimeOnly(9, 0), new TimeOnly(10, 30), 30));
-        _turnos.Lista.Add(Turno.CrearProgramado(
+        _turnos.Sembrar(Turno.CrearProgramado(
             1, 10, Lunes, new TimeOnly(9, 30), new TimeOnly(10, 0), null, OrigenCreacion.Web, 99));
 
         var libres = await _servicio.ObtenerFranjasLibresAsync(1, Lunes);
@@ -48,57 +48,5 @@ public class DisponibilidadServiceTests
     public async Task ObtenerFranjasLibres_CuandoElOdontologoNoEsValido_EntoncesLanzaDomainException(int odontologoId)
     {
         await Assert.ThrowsAsync<DomainException>(() => _servicio.ObtenerFranjasLibresAsync(odontologoId, Lunes));
-    }
-
-    private class FakeHorarios : IHorarioDisponibleRepository
-    {
-        public List<HorarioDisponible> Lista { get; } = new();
-
-        public Task AgregarAsync(HorarioDisponible horario, CancellationToken ct = default)
-        {
-            Lista.Add(horario);
-            return Task.CompletedTask;
-        }
-
-        public Task<HorarioDisponible?> ObtenerPorIdAsync(int id, CancellationToken ct = default) =>
-            Task.FromResult(Lista.FirstOrDefault(h => h.Id == id && h.Activo));
-
-        public Task<IReadOnlyList<HorarioDisponible>> ListarPorOdontologoAsync(int odontologoId, CancellationToken ct = default) =>
-            Task.FromResult<IReadOnlyList<HorarioDisponible>>(
-                Lista.Where(h => h.OdontologoId == odontologoId && h.Activo).ToList());
-    }
-
-    private class FakeTurnos : ITurnoRepository
-    {
-        public List<Turno> Lista { get; } = new();
-        public bool FueConsultado { get; private set; }
-
-        public Task AgregarAsync(Turno turno, CancellationToken ct = default)
-        {
-            Lista.Add(turno);
-            return Task.CompletedTask;
-        }
-
-        public Task<Turno?> ObtenerPorIdAsync(int id, CancellationToken ct = default) =>
-            Task.FromResult(Lista.FirstOrDefault(t => t.Id == id));
-
-        public Task<IReadOnlyList<Turno>> ListarPorOdontologoYFechaAsync(int odontologoId, DateOnly fecha, CancellationToken ct = default) =>
-            Task.FromResult<IReadOnlyList<Turno>>(
-                Lista.Where(t => t.OdontologoId == odontologoId && t.Fecha == fecha).ToList());
-
-        public Task<int> ObtenerUltimoOrdenEntreTurnoAsync(int odontologoId, DateOnly fecha, CancellationToken ct = default) =>
-            Task.FromResult(Lista
-                .Where(t => t.OdontologoId == odontologoId && t.Fecha == fecha && t.OrdenEntreTurno.HasValue)
-                .Select(t => t.OrdenEntreTurno!.Value)
-                .DefaultIfEmpty(0)
-                .Max());
-
-        public Task<IReadOnlyList<Turno>> ListarProgramadosActivosAsync(int odontologoId, DateOnly fecha, CancellationToken ct = default)
-        {
-            FueConsultado = true;
-            return Task.FromResult<IReadOnlyList<Turno>>(
-                Lista.Where(t => t.OdontologoId == odontologoId && t.Fecha == fecha
-                                 && t.Tipo == TipoTurno.Programado && t.EstaActivo).ToList());
-        }
     }
 }
