@@ -117,6 +117,7 @@ builder.Services.AddScoped<IHorarioDisponibleRepository, HorarioDisponibleReposi
 builder.Services.AddScoped<IDisponibilidadService, DisponibilidadService>();
 builder.Services.AddScoped<IConsultaPerfiles, ConsultaPerfiles>();
 builder.Services.AddScoped<ProgramarTurnoUseCase>();
+builder.Services.AddScoped<CrearEntreTurnoUseCase>();
 builder.Services.AddSingleton<IReloj, RelojClinica>();
 
 // 8. Usuario actual / Contexto HTTP

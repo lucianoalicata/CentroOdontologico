@@ -1,3 +1,4 @@
+using Clinica.Aplicacion.Turnos.Dtos;
 using Clinica.Aplicacion.Turnos.Puertos;
 using Clinica.Infraestructura.Persistencia;
 using Microsoft.EntityFrameworkCore;
@@ -19,4 +20,11 @@ public class ConsultaPerfiles : IConsultaPerfiles
 
     public Task<bool> ExistePacienteActivoAsync(int pacienteId, CancellationToken ct = default) =>
         _db.Pacientes.AnyAsync(p => p.Id == pacienteId, ct);
+
+    public Task<PacienteSugeridoDto?> BuscarPacienteActivoPorDniAsync(string dni, CancellationToken ct = default) =>
+        _db.Pacientes
+            .AsNoTracking()
+            .Where(p => p.Dni == dni)
+            .Select(p => new PacienteSugeridoDto(p.Id, p.Nombre, p.Apellido, p.Dni))
+            .FirstOrDefaultAsync(ct);
 }

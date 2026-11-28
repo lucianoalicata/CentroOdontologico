@@ -1,5 +1,6 @@
 using Clinica.Aplicacion.Comun.Puertos;
 using Clinica.Aplicacion.Identidad;
+using Clinica.Aplicacion.Turnos.Dtos;
 using Clinica.Aplicacion.Turnos.Puertos;
 using Clinica.Dominio.Comun;
 using Clinica.Dominio.Identidad;
@@ -89,6 +90,15 @@ internal class FakeConsultaPerfiles : IConsultaPerfiles
 
     public Task<bool> ExistePacienteActivoAsync(int pacienteId, CancellationToken ct = default) =>
         Task.FromResult(PacientesActivos.Contains(pacienteId));
+
+    public List<PacienteSugeridoDto> PacientesPorDni { get; } = new();
+    public string? UltimoDniBuscado { get; private set; }
+
+    public Task<PacienteSugeridoDto?> BuscarPacienteActivoPorDniAsync(string dni, CancellationToken ct = default)
+    {
+        UltimoDniBuscado = dni;
+        return Task.FromResult(PacientesPorDni.FirstOrDefault(p => p.Dni == dni));
+    }
 }
 
 internal class FakeUsuarioActual : IUsuarioActual
