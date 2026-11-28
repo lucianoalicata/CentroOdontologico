@@ -281,6 +281,136 @@ namespace Clinica.Infraestructura.Migrations
                     b.ToTable("UsuarioRoles", (string)null);
                 });
 
+            modelBuilder.Entity("Clinica.Dominio.Turnos.HorarioDisponible", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Activo")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("DiaSemana")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("varchar(15)");
+
+                    b.Property<int>("DuracionTurnoMinutos")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("FechaBaja")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("FechaModificacion")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<TimeOnly>("HoraFin")
+                        .HasColumnType("time(6)");
+
+                    b.Property<TimeOnly>("HoraInicio")
+                        .HasColumnType("time(6)");
+
+                    b.Property<int>("OdontologoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OdontologoId", "DiaSemana");
+
+                    b.ToTable("HorariosDisponibles", (string)null);
+                });
+
+            modelBuilder.Entity("Clinica.Dominio.Turnos.Turno", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CanceladoPor")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CreadoPor")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<DateOnly>("Fecha")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime?>("FechaCancelacion")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("FechaModificacion")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<TimeOnly?>("HoraFin")
+                        .HasColumnType("time(6)");
+
+                    b.Property<TimeOnly?>("HoraInicio")
+                        .HasColumnType("time(6)");
+
+                    b.Property<string>("Motivo")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<string>("MotivoCancelacion")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<int>("OdontologoId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OrdenEntreTurno")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Origen")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
+
+                    b.Property<int?>("PacienteId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PacienteWalkInDni")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("PacienteWalkInNombre")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.Property<string>("PacienteWalkInTelefono")
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
+
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PacienteId");
+
+                    b.HasIndex("OdontologoId", "Fecha", "OrdenEntreTurno")
+                        .IsUnique();
+
+                    b.ToTable("Turnos", (string)null);
+                });
+
             modelBuilder.Entity("Clinica.Dominio.Identidad.OdontologoPerfil", b =>
                 {
                     b.HasOne("Clinica.Dominio.Identidad.Usuario", null)
@@ -314,6 +444,29 @@ namespace Clinica.Infraestructura.Migrations
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Clinica.Dominio.Turnos.HorarioDisponible", b =>
+                {
+                    b.HasOne("Clinica.Dominio.Identidad.OdontologoPerfil", null)
+                        .WithMany()
+                        .HasForeignKey("OdontologoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Clinica.Dominio.Turnos.Turno", b =>
+                {
+                    b.HasOne("Clinica.Dominio.Identidad.OdontologoPerfil", null)
+                        .WithMany()
+                        .HasForeignKey("OdontologoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Clinica.Dominio.Identidad.PacientePerfil", null)
+                        .WithMany()
+                        .HasForeignKey("PacienteId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Clinica.Dominio.Identidad.Usuario", b =>
