@@ -54,6 +54,15 @@ public class DisponibilidadServiceTests
     {
         public List<HorarioDisponible> Lista { get; } = new();
 
+        public Task AgregarAsync(HorarioDisponible horario, CancellationToken ct = default)
+        {
+            Lista.Add(horario);
+            return Task.CompletedTask;
+        }
+
+        public Task<HorarioDisponible?> ObtenerPorIdAsync(int id, CancellationToken ct = default) =>
+            Task.FromResult(Lista.FirstOrDefault(h => h.Id == id && h.Activo));
+
         public Task<IReadOnlyList<HorarioDisponible>> ListarPorOdontologoAsync(int odontologoId, CancellationToken ct = default) =>
             Task.FromResult<IReadOnlyList<HorarioDisponible>>(
                 Lista.Where(h => h.OdontologoId == odontologoId && h.Activo).ToList());
@@ -63,6 +72,26 @@ public class DisponibilidadServiceTests
     {
         public List<Turno> Lista { get; } = new();
         public bool FueConsultado { get; private set; }
+
+        public Task AgregarAsync(Turno turno, CancellationToken ct = default)
+        {
+            Lista.Add(turno);
+            return Task.CompletedTask;
+        }
+
+        public Task<Turno?> ObtenerPorIdAsync(int id, CancellationToken ct = default) =>
+            Task.FromResult(Lista.FirstOrDefault(t => t.Id == id));
+
+        public Task<IReadOnlyList<Turno>> ListarPorOdontologoYFechaAsync(int odontologoId, DateOnly fecha, CancellationToken ct = default) =>
+            Task.FromResult<IReadOnlyList<Turno>>(
+                Lista.Where(t => t.OdontologoId == odontologoId && t.Fecha == fecha).ToList());
+
+        public Task<int> ObtenerUltimoOrdenEntreTurnoAsync(int odontologoId, DateOnly fecha, CancellationToken ct = default) =>
+            Task.FromResult(Lista
+                .Where(t => t.OdontologoId == odontologoId && t.Fecha == fecha && t.OrdenEntreTurno.HasValue)
+                .Select(t => t.OrdenEntreTurno!.Value)
+                .DefaultIfEmpty(0)
+                .Max());
 
         public Task<IReadOnlyList<Turno>> ListarProgramadosActivosAsync(int odontologoId, DateOnly fecha, CancellationToken ct = default)
         {

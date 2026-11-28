@@ -2,6 +2,7 @@
 using Clinica.Dominio.Comun;
 using Clinica.Dominio.HistoriaClinica;
 using Clinica.Dominio.Identidad;
+using Clinica.Dominio.Turnos;
 using Microsoft.EntityFrameworkCore;
 
 namespace Clinica.Infraestructura.Persistencia;
@@ -16,6 +17,8 @@ public class ClinicaDbContext : DbContext, IUnitOfWork
     public DbSet<OdontologoPerfil> Odontologos => Set<OdontologoPerfil>();
     public DbSet<SecretariaPerfil> Secretarias => Set<SecretariaPerfil>();
     public DbSet<Prestacion> Prestaciones => Set<Prestacion>();
+    public DbSet<Turno> Turnos => Set<Turno>();
+    public DbSet<HorarioDisponible> HorariosDisponibles => Set<HorarioDisponible>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
