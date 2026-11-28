@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Clinica.Dominio.Comun;
+using Clinica.Dominio.HistoriaClinica;
 using Clinica.Dominio.Identidad;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +15,7 @@ public class ClinicaDbContext : DbContext, IUnitOfWork
     public DbSet<PacientePerfil> Pacientes => Set<PacientePerfil>();
     public DbSet<OdontologoPerfil> Odontologos => Set<OdontologoPerfil>();
     public DbSet<SecretariaPerfil> Secretarias => Set<SecretariaPerfil>();
+    public DbSet<Prestacion> Prestaciones => Set<Prestacion>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
