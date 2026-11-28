@@ -1,4 +1,5 @@
 using Clinica.Api.Documentacion;
+using Clinica.Infraestructura.HistoriaClinica.Consultas;
 using Clinica.Aplicacion.HistoriaClinica.Puertos;
 using Clinica.Infraestructura.HistoriaClinica.Almacenamiento;
 using Clinica.Api.Middleware;
@@ -110,6 +111,14 @@ builder.Services.AddScoped<IOdontologoConsulta, OdontologoConsulta>();
 // 7b. Inyección de dependencias de Historia clínica
 builder.Services.AddScoped<IPrestacionRepository, PrestacionRepository>();
 builder.Services.AddScoped<IPrestacionService, PrestacionService>();
+builder.Services.AddScoped<IHistoriaClinicaRepository, HistoriaClinicaRepository>();
+builder.Services.AddScoped<IArchivoAdjuntoRepository, ArchivoAdjuntoRepository>();
+builder.Services.AddScoped<IConsultaPacientes, ConsultaPacientes>();
+builder.Services.AddScoped<ObtenerHistoriaClinicaUseCase>();
+builder.Services.AddScoped<RegistrarEntradaUseCase>();
+builder.Services.AddScoped<ListarEvolucionUseCase>();
+builder.Services.AddScoped<ListarHistorialPrestacionesUseCase>();
+builder.Services.AddScoped<ActualizarAlertasMedicasUseCase>();
 
 // 7c. Inyección de dependencias de Turnos
 builder.Services.AddScoped<ITurnoRepository, TurnoRepository>();
