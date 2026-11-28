@@ -15,6 +15,9 @@ using Clinica.Infraestructura.HistoriaClinica.Repositorios;
 using Clinica.Infraestructura.Identidad.Repositorios;
 using Clinica.Infraestructura.Identidad.Seguridad;
 using Clinica.Infraestructura.Persistencia;
+using Clinica.Aplicacion.Turnos.Servicios;
+using Clinica.Dominio.Turnos;
+using Clinica.Infraestructura.Turnos.Repositorios;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -103,6 +106,11 @@ builder.Services.AddScoped<IOdontologoConsulta, OdontologoConsulta>();
 // 7b. Inyección de dependencias de Historia clínica
 builder.Services.AddScoped<IPrestacionRepository, PrestacionRepository>();
 builder.Services.AddScoped<IPrestacionService, PrestacionService>();
+
+// 7c. Inyección de dependencias de Turnos
+builder.Services.AddScoped<ITurnoRepository, TurnoRepository>();
+builder.Services.AddScoped<IHorarioDisponibleRepository, HorarioDisponibleRepository>();
+builder.Services.AddScoped<IDisponibilidadService, DisponibilidadService>();
 
 // 8. Usuario actual / Contexto HTTP
 builder.Services.AddHttpContextAccessor();

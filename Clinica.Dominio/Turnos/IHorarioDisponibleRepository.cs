@@ -1,8 +1,12 @@
 namespace Clinica.Dominio.Turnos;
 
-/// <summary>Contrato de persistencia de horarios. La implementación se agrega en S1-14.</summary>
 public interface IHorarioDisponibleRepository
 {
-    /// <summary>Horarios activos del odontólogo, de todos los días de la semana.</summary>
+    Task AgregarAsync(HorarioDisponible horario, CancellationToken ct = default);
+
+    /// <summary>Horario activo por Id, o null si no existe o fue dado de baja.</summary>
+    Task<HorarioDisponible?> ObtenerPorIdAsync(int id, CancellationToken ct = default);
+
+    /// <summary>Horarios activos del odontólogo, de todos los días, ordenados por día y hora de inicio.</summary>
     Task<IReadOnlyList<HorarioDisponible>> ListarPorOdontologoAsync(int odontologoId, CancellationToken ct = default);
 }
