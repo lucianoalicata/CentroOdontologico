@@ -4,7 +4,6 @@ using Clinica.Aplicacion.Identidad;
 using Clinica.Aplicacion.Turnos.Dtos;
 using Clinica.Aplicacion.Turnos.Puertos;
 using Clinica.Dominio.Comun;
-using Clinica.Dominio.Identidad;
 using Clinica.Dominio.Turnos;
 
 namespace Clinica.Aplicacion.Turnos.Servicios;
@@ -79,22 +78,17 @@ public class ProgramarTurnoUseCase
 
     private OrigenCreacion ResolverOrigenYPermisos(ProgramarTurnoDto dto)
     {
-        if (_usuario.TieneRol(nameof(RolUsuario.Secretaria)) || _usuario.TieneRol(nameof(RolUsuario.Administrador)))
-        {
-            var origen = dto.Origen ?? OrigenCreacion.PresencialSecretaria;
-            if (origen is not (OrigenCreacion.TelefonoSecretaria or OrigenCreacion.PresencialSecretaria))
-                throw new DomainException("El origen del turno debe ser telefónico o presencial.");
-            return origen;
-        }
+        if (PermisosTurno.EsPersonal(_usuario))
+            return PermisosTurno.OrigenDelPersonal(dto.Origen);
 
-        if (_usuario.TieneRol(nameof(RolUsuario.Odontologo)))
+        if (PermisosTurno.EsOdontologo(_usuario))
         {
             if (_usuario.OdontologoId != dto.OdontologoId)
                 throw new AccesoDenegadoException("Solo podés programar turnos en tu propia agenda.");
             return OrigenCreacion.Odontologo;
         }
 
-        if (_usuario.TieneRol(nameof(RolUsuario.Paciente)))
+        if (PermisosTurno.EsPaciente(_usuario))
         {
             if (_usuario.PacienteId != dto.PacienteId)
                 throw new AccesoDenegadoException("Solo podés programar turnos para vos.");
