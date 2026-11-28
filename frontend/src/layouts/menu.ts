@@ -20,6 +20,7 @@ const MENU_POR_ROL: Record<Rol, ItemMenu[]> = {
   ],
   Administrador: [
     { etiqueta: 'Administración', ruta: RUTAS.administrador },
+    { etiqueta: 'Prestaciones', ruta: RUTAS.prestaciones },
     { etiqueta: 'Pacientes', ruta: RUTAS.pacientes },
     { etiqueta: 'Horarios', ruta: RUTAS.disponibilidad },
   ],

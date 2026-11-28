@@ -8,6 +8,7 @@ export const RUTAS = {
   paciente: '/paciente',
   pacientes: '/pacientes',
   disponibilidad: '/disponibilidad',
+  prestaciones: '/prestaciones',
   prohibido: '/prohibido',
 } as const
 
