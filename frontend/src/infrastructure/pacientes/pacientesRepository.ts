@@ -27,6 +27,11 @@ export const pacientesRepository = {
     return data
   },
 
+  async obtenerPorId(id: number): Promise<PacienteDto> {
+    const { data } = await apiClient.get<PacienteDto>(`/api/pacientes/${id}`)
+    return data
+  },
+
   async registrar(dto: RegistrarPacienteDto): Promise<PacienteDto> {
     const { data } = await apiClient.post<PacienteDto>('/api/pacientes', dto)
     return data

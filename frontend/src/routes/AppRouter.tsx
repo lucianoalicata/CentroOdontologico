@@ -2,6 +2,8 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { useAuth } from '../auth/useAuth'
 import { LoginPage } from '../features/identidad/LoginPage'
 import { PacientesPage } from '../features/identidad/PacientesPage'
+import { HistoriaClinicaPage } from '../features/historiaClinica/HistoriaClinicaPage'
+import { PrestacionesPage } from '../features/historiaClinica/PrestacionesPage'
 import { DisponibilidadPage } from '../features/odotologos/DisponibilidadPage'
 import { LayoutPrincipal } from '../layouts/LayoutPrincipal'
 import { NoEncontradoPage } from '../shared/pages/NoEncontradoPage'
@@ -37,6 +39,7 @@ export function AppRouter() {
               path={RUTAS.administrador}
               element={<PanelProvisorioPage titulo="Administración" />}
             />
+            <Route path={RUTAS.prestaciones} element={<PrestacionesPage />} />
           </Route>
 
           <Route element={<RutaProtegida roles={['Secretaria']} />}>
@@ -56,6 +59,7 @@ export function AppRouter() {
 
           <Route element={<RutaProtegida roles={['Secretaria', 'Odontologo', 'Administrador']} />}>
             <Route path={RUTAS.pacientes} element={<PacientesPage />} />
+            <Route path={RUTAS.historiaClinica} element={<HistoriaClinicaPage />} />
             <Route path={RUTAS.disponibilidad} element={<DisponibilidadPage />} />
           </Route>
         </Route>
