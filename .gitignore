@@ -372,3 +372,5 @@ appsettings.Development.json
 frontend/node_modules/
 frontend/dist/
 frontend/.vs/
+# Archivos adjuntos de la historia clinica (almacenamiento local de desarrollo)
+Clinica.Api/App_Data/
