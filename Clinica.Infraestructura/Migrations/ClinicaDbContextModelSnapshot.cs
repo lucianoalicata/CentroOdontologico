@@ -22,6 +22,128 @@ namespace Clinica.Infraestructura.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
+            modelBuilder.Entity("Clinica.Dominio.HistoriaClinica.ArchivoAdjunto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaveAlmacenamiento")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<int>("EntradaHistoriaClinicaId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("FechaModificacion")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("NombreOriginal")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("SubidoPorUsuarioId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TamanoBytes")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("TipoContenido")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClaveAlmacenamiento")
+                        .IsUnique();
+
+                    b.HasIndex("EntradaHistoriaClinicaId");
+
+                    b.HasIndex("SubidoPorUsuarioId");
+
+                    b.ToTable("ArchivosAdjuntos", (string)null);
+                });
+
+            modelBuilder.Entity("Clinica.Dominio.HistoriaClinica.EntradaHistoriaClinica", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Comentario")
+                        .HasMaxLength(2000)
+                        .HasColumnType("varchar(2000)");
+
+                    b.Property<int?>("CorrigeEntradaId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("FechaModificacion")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("HistoriaClinicaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OdontologoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CorrigeEntradaId");
+
+                    b.HasIndex("OdontologoId");
+
+                    b.HasIndex("HistoriaClinicaId", "FechaCreacion");
+
+                    b.ToTable("EntradasHistoriaClinica", (string)null);
+                });
+
+            modelBuilder.Entity("Clinica.Dominio.HistoriaClinica.HistoriaClinicaPaciente", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AlertasMedicas")
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(1000)");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("FechaModificacion")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("PacienteId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PacienteId")
+                        .IsUnique();
+
+                    b.ToTable("HistoriasClinicas", (string)null);
+                });
+
             modelBuilder.Entity("Clinica.Dominio.HistoriaClinica.Prestacion", b =>
                 {
                     b.Property<int>("Id")
@@ -73,6 +195,53 @@ namespace Clinica.Infraestructura.Migrations
                         .IsUnique();
 
                     b.ToTable("Prestaciones", (string)null);
+                });
+
+            modelBuilder.Entity("Clinica.Dominio.HistoriaClinica.PrestacionRealizada", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Codigo")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
+
+                    b.Property<int>("EntradaHistoriaClinicaId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("FechaModificacion")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("MesesGarantia")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PiezaDental")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("PrecioUnitario")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EntradaHistoriaClinicaId");
+
+                    b.ToTable("PrestacionesRealizadas", (string)null);
                 });
 
             modelBuilder.Entity("Clinica.Dominio.Identidad.OdontologoPerfil", b =>
@@ -411,6 +580,59 @@ namespace Clinica.Infraestructura.Migrations
                     b.ToTable("Turnos", (string)null);
                 });
 
+            modelBuilder.Entity("Clinica.Dominio.HistoriaClinica.ArchivoAdjunto", b =>
+                {
+                    b.HasOne("Clinica.Dominio.HistoriaClinica.EntradaHistoriaClinica", null)
+                        .WithMany()
+                        .HasForeignKey("EntradaHistoriaClinicaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Clinica.Dominio.Identidad.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("SubidoPorUsuarioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Clinica.Dominio.HistoriaClinica.EntradaHistoriaClinica", b =>
+                {
+                    b.HasOne("Clinica.Dominio.HistoriaClinica.EntradaHistoriaClinica", null)
+                        .WithMany()
+                        .HasForeignKey("CorrigeEntradaId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Clinica.Dominio.HistoriaClinica.HistoriaClinicaPaciente", null)
+                        .WithMany("Entradas")
+                        .HasForeignKey("HistoriaClinicaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Clinica.Dominio.Identidad.OdontologoPerfil", null)
+                        .WithMany()
+                        .HasForeignKey("OdontologoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Clinica.Dominio.HistoriaClinica.HistoriaClinicaPaciente", b =>
+                {
+                    b.HasOne("Clinica.Dominio.Identidad.PacientePerfil", null)
+                        .WithOne()
+                        .HasForeignKey("Clinica.Dominio.HistoriaClinica.HistoriaClinicaPaciente", "PacienteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Clinica.Dominio.HistoriaClinica.PrestacionRealizada", b =>
+                {
+                    b.HasOne("Clinica.Dominio.HistoriaClinica.EntradaHistoriaClinica", null)
+                        .WithMany("Prestaciones")
+                        .HasForeignKey("EntradaHistoriaClinicaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Clinica.Dominio.Identidad.OdontologoPerfil", b =>
                 {
                     b.HasOne("Clinica.Dominio.Identidad.Usuario", null)
@@ -467,6 +689,16 @@ namespace Clinica.Infraestructura.Migrations
                         .WithMany()
                         .HasForeignKey("PacienteId")
                         .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Clinica.Dominio.HistoriaClinica.EntradaHistoriaClinica", b =>
+                {
+                    b.Navigation("Prestaciones");
+                });
+
+            modelBuilder.Entity("Clinica.Dominio.HistoriaClinica.HistoriaClinicaPaciente", b =>
+                {
+                    b.Navigation("Entradas");
                 });
 
             modelBuilder.Entity("Clinica.Dominio.Identidad.Usuario", b =>
